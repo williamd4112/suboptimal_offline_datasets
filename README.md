@@ -4,7 +4,7 @@ Suboptimal offline RL datasets
 This repo curates `random-medium-x%-v2` and `random-expert-x%-v2` datasets based on Mujoco datasets in D4RL. The datasets are used in [Harnessing Mixed Offline Reinforcement Learning Datasets via Trajectory Weighting ](https://openreview.net/pdf?id=OhUAblg27z), ICLR 2023.
 
 # Installation
-- Download datasets from `https://drive.google.com/file/d/1tFp_2obVbHGFtoFv7apuL9O0ovUOp42D/view?usp=sharing`
+- Download datasets from https://drive.google.com/file/d/1tFp_2obVbHGFtoFv7apuL9O0ovUOp42D/view?usp=sharing
 - Unzip the dataset and extract to `suboptimal_offline_datasets/custom_datasets` (you should see lots of `*.hdf5` files in this directory)
 - `pip install -e .`
 
