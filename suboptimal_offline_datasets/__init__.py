@@ -23,3 +23,15 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
                         'dataset_url': os.path.join(init_path, "custom_datasets", env_name + ".hdf5")
                     }
                 )
+
+                register(
+                    id='%s-random-%s-partial-%s-%s' % (agent, dataset, ratio, version),
+                    entry_point='suboptimal_offline_datasets.custom_envs:get_%s_env' % agent.replace('halfcheetah', 'cheetah').replace('walker2d', 'walker'),
+                    max_episode_steps=1000,
+                    kwargs={
+                        'deprecated': version != 'v2',
+                        'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
+                        'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
+                        'dataset_url': os.path.join(init_path, "partial_mixed_datasets", env_name + ".hdf5")
+                    }
+                )
