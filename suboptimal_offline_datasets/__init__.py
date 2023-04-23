@@ -8,6 +8,7 @@ init_path = os.path.dirname(os.path.realpath(__file__))
 
 for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
     for dataset in ['medium', 'expert']:
+        # mixed
         for ratio in ["0.01", "0.05", "0.1", "0.25", "0.5"]:
             for version in ['v2']:
                 env_name = '%s-random-%s-%s-%s' % (agent, dataset, ratio, version)
@@ -35,3 +36,16 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
                         'dataset_url': os.path.join(init_path, "partial_mixed_datasets", env_name + ".hdf5")
                     }
                 )
+
+        # reset-stoch
+        register(
+            id=f'{agent}-{dataset}-reset-stoch-v2',
+            entry_point='suboptimal_offline_datasets.custom_envs:get_hopper_env',
+            max_episode_steps=1000,
+            kwargs={
+                'deprecated': version != 'v2',
+                'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
+                'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
+                'dataset_url': os.path.join(init_path, "custom_datasets", f"{agent}-{dataset}-reset-stoch-v2.hdf5")
+            }
+        )
