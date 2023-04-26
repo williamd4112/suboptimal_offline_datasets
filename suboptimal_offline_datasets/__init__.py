@@ -6,6 +6,21 @@ from d4rl import infos
 
 init_path = os.path.dirname(os.path.realpath(__file__))
 
+# neorl
+for task in ["finance", "citylearn", "sp", "ww"]:
+    for data_type in ["low", "medium", "high"]:
+        env_name = f"{task}-{data_type}-v0"
+        register(
+            id=env_name,
+            entry_point='suboptimal_offline_datasets.custom_envs:make_neorl_env',
+            kwargs={
+                "task": task,
+                "data_type": data_type,
+            }
+        )
+
+
+
 for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
     # mixed
     for dataset in ['medium', 'expert']:
@@ -34,6 +49,19 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
                         'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
                         'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
                         'dataset_url': os.path.join(init_path, "partial_mixed_datasets", env_name + ".hdf5")
+                    }
+                )
+
+                resetfree_env_name = '%s-random-%s-resetfree-%s-%s' % (agent, dataset, ratio, version)
+                register(
+                    id=resetfree_env_name,
+                    entry_point='suboptimal_offline_datasets.custom_envs:get_%s_env' % agent.replace('halfcheetah', 'cheetah').replace('walker2d', 'walker'),
+                    max_episode_steps=1000,
+                    kwargs={
+                        'deprecated': version != 'v2',
+                        'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
+                        'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
+                        'dataset_url': os.path.join(init_path, "custom_datasets", '%s-random-%s-%s-resetfree-%s' % (agent, dataset, ratio, version) + ".hdf5")
                     }
                 )
 
@@ -79,15 +107,18 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
     # reset-stoch
     for dataset in ['medium', 'expert']:
         for version in ['v2']:
-            score_env_name = '%s-%s-%s' % (agent, dataset, version)
-            register(
-                id=f'{agent}-{dataset}-reset-stoch-{version}',
-                 entry_point='suboptimal_offline_datasets.custom_envs:get_%s_env' % agent.replace('halfcheetah', 'cheetah').replace('walker2d', 'walker'),
-                max_episode_steps=1000,
-                kwargs={
-                    'deprecated': version != 'v2',
-                    'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
-                    'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
-                    'dataset_url': os.path.join(init_path, "custom_datasets", f"{agent}-{dataset}-reset-stoch-v2.hdf5")
-                }
-            )
+            for mode in ["reset-stoch", "resetfree-stoch", "resetfree-det"]:
+                score_env_name = '%s-%s-%s' % (agent, dataset, version)
+                register(
+                    id=f'{agent}-{dataset}-{mode}-{version}',
+                    entry_point='suboptimal_offline_datasets.custom_envs:get_%s_env' % agent.replace('halfcheetah', 'cheetah').replace('walker2d', 'walker'),
+                    max_episode_steps=1000,
+                    kwargs={
+                        'deprecated': version != 'v2',
+                        'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
+                        'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
+                        'dataset_url': os.path.join(init_path, "custom_datasets", f"{agent}-{dataset}-{mode}-v2.hdf5")
+                    }
+                )
+
+
