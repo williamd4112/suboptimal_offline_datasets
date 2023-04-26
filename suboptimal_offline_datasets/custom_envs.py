@@ -49,7 +49,7 @@ class D4RLNeoRLEnv(gym.Env):
         train_data["observations"] = train_data.pop("obs")
         train_data["next_observations"] = train_data.pop("next_obs")
         train_data["actions"] = train_data.pop("action")
-        train_data["rewards"] = train_data.pop("reward")
+        train_data["rewards"] = train_data.pop("reward")[:, 0] # NOTE: rewards' shape have to be (N,)
         train_data["terminals"] = train_data.pop("done")
         train_data["timeouts"] = np.zeros_like(train_data["terminals"])
 
