@@ -7,7 +7,7 @@ from d4rl import infos
 init_path = os.path.dirname(os.path.realpath(__file__))
 
 # neorl
-for task in ["finance", "citylearn", "sp", "ww"]:
+for task in ["finance", "citylearn", "ib", "sp", "ww", "logistics_distribution"]:
     for data_type in ["low", "medium", "high"]:
         env_name = f"{task}-{data_type}-v0"
         register(
