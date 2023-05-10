@@ -27,7 +27,7 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
         for version in ['v2']:
             score_env_name = '%s-%s-%s' % (agent, dataset, version)
             for ratio in ["0.01", "0.05", "0.1", "0.25", "0.5"]:
-                env_name = '%s-random-%s-%s%s' % (agent, dataset, ratio, version)
+                env_name = '%s-random-%s-%s-%s' % (agent, dataset, ratio, version)
 
                 register(
                     id='%s-random-%s-%s-resetfree-%s' % (agent, dataset, ratio, version),

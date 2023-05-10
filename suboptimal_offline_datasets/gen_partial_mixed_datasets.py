@@ -129,9 +129,11 @@ if __name__ == "__main__":
         "0.5",
     ]
 
+    min_len = 5
+    max_len = 500
     for env, level, good_ratio in tqdm(itertools.product(env_names, levels, dataset_ratios)):
-        dataset = make_env_and_dataset(f"{env}-{level}-v2", float(good_ratio))
-        file_path = os.path.join(base_path, f"{env}-random-{level}-{good_ratio}-v2.hdf5")
+        dataset = make_env_and_dataset(f"{env}-{level}-v2", float(good_ratio), min_len=min_len, max_len=max_len)
+        file_path = os.path.join(base_path, f"{env}-random-{level}-{good_ratio}-{min_len}-{max_len}-v2.hdf5")
         hf = h5py.File(file_path, 'w')
         for k in dataset.keys():
           hf.create_dataset(k, data=dataset[k], compression='gzip')
