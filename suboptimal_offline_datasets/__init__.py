@@ -75,7 +75,7 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
                         'deprecated': version != 'v2',
                         'ref_min_score': infos.REF_MIN_SCORE[score_env_name],
                         'ref_max_score': infos.REF_MAX_SCORE[score_env_name],
-                        'dataset_url': os.path.join(init_path, "partial_mixed_datasets", '%s-random-%s-partial-%s-5-10-%s' % (agent, dataset, ratio, version) + ".hdf5")
+                        'dataset_url': os.path.join(init_path, "partial_mixed_datasets", '%s-random-%s-%s-5-10-%s' % (agent, dataset, ratio, version) + ".hdf5")
                     }
                 )
 
