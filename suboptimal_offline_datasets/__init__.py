@@ -68,7 +68,7 @@ for agent in ['hopper', 'halfcheetah', 'ant', 'walker2d']:
                 )
 
                 register(
-                    id='%s-random-%s-partial-%s-%s' % (agent, dataset, ratio, version),
+                    id='%s-random-%s-partial-%s-5-10-%s' % (agent, dataset, ratio, version),
                     entry_point='suboptimal_offline_datasets.custom_envs:get_%s_env' % agent.replace('halfcheetah', 'cheetah').replace('walker2d', 'walker'),
                     max_episode_steps=1000,
                     kwargs={
